@@ -4,17 +4,21 @@ import cmd
 
 
 class HBNBCommand(cmd.Cmd):
-    """Hii"""
+    """"""
     prompt = '(hbnb) '
 
     # def do_help(self, arg: str):
     #     """Displays help for the various commands"""
 
-    def do_quit(self):
+    def emptyline(self) -> bool:
+        """Prints new line when an empty line is passed to the interpreter"""
+        ...
+
+    def do_quit(self, line):
         """Quit command to exit the program\n"""
         return True
 
-    def do_EOF(self):
+    def do_EOF(self, line):
         """Quit command to exit the program\n"""
         return True
 
