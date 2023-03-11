@@ -6,7 +6,7 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = dict()
 
-    def all(self) -> dict:
+    def all(self):
         return FileStorage.__objects
 
     def new(self, obj):
@@ -16,21 +16,20 @@ class FileStorage:
     def save(self):
         path = FileStorage.__file_path
 
-        new_obj = {k: FileStorage.__objects[k].to_dict()
-                   for k in FileStorage.__objects.keys()}
+        obj_dict = {k: FileStorage.__objects[k].to_dict()
+                    for k in FileStorage.__objects.keys()}
 
         with open(path, 'w') as file:
-            json.dump(new_obj, file)
+            json.dump(obj_dict, file)
 
     def reload(self):
         path = FileStorage.__file_path
 
         try:
             with open(path) as file:
-                object_json = json.load(file)
-                for obj in object_json.values():
-                    class_name = obj['__class__']
-                    # obj.pop('__class__')
-                    self.new(eval(class_name)(**obj))
+                obj_dict = json.load(file)
+            for obj in obj_dict.values():
+                class_name = obj['__class__']
+                self.new(eval(class_name)(**obj))
         except FileNotFoundError:
             return
