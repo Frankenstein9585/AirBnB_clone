@@ -30,12 +30,12 @@ class HBNBCommand(cmd.Cmd):
     #     """Displays help for the various commands"""
 
     def emptyline(self) -> bool:
-        """Prints new line when an empty line is passed to the interpreter"""
+        """Prints new line when an empty line is passed to the interpreter\n"""
         ...
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel,
-        saves it (to the JSON file) and prints the id"""
+        saves it (to the JSON file) and prints the id\n"""
         if not arg:
             print('** class name missing **')
             return
@@ -49,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """Prints the string representation
-        of an instance based on the class name and id"""
+        of an instance based on the class name and id\n"""
 
         args = arg.split()
         e = IndexError
@@ -72,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
         print(obj_dict[f'{args[0]}.{args[1]}'])
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id"""
+        """Deletes an instance based on the class name and id\n"""
 
         args = arg.split()
         e = IndexError
@@ -97,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, arg):
-        """Prints the string representation of all instances"""
+        """Prints the string representation of all instances\n"""
 
         args = arg.split()
         e = IndexError
@@ -117,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Updates an instance based on the class name
-        and id by adding or updating attribute"""
+        and id by adding or updating attribute\n"""
         args = shlex.split(arg)
         e = IndexError
 
