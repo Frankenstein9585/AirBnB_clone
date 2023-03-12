@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''env not needed for this task'''
+"""env not needed for this task"""
 import cmd
 import os
 import shlex
