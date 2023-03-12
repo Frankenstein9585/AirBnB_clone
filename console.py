@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 import cmd
+import os
 import shlex
 from models.base_model import BaseModel
 from models.user import User
@@ -32,7 +34,8 @@ class HBNBCommand(cmd.Cmd):
         ...
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id"""
+        """Creates a new instance of BaseModel,
+        saves it (to the JSON file) and prints the id"""
         if not arg:
             print('** class name missing **')
             return
@@ -45,7 +48,8 @@ class HBNBCommand(cmd.Cmd):
         print(new_model.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance based on the class name and id"""
+        """Prints the string representation
+        of an instance based on the class name and id"""
 
         args = arg.split()
         e = IndexError
@@ -85,6 +89,7 @@ class HBNBCommand(cmd.Cmd):
                 print('** no instance found **')
                 return
         except e:
+
             print('** instance id missing **')
             return
 
@@ -92,26 +97,27 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, arg):
-        """Prints the string representation of an instance based on the class name and id"""
+        """Prints the string representation of all instances"""
 
         args = arg.split()
         e = IndexError
         obj_list = list()
-        try:
-            if args[0] not in HBNBCommand.CLASSES:
-                print("** class name doesn't exist **")
-                return
-        except e:
-            print('** class name missing **')
+        if not arg:
+            for k in obj_dict.keys():
+                obj_list.append(str(obj_dict[k]))
+
+        elif args[0] not in HBNBCommand.CLASSES:
+            print("** class name doesn't exist **")
             return
-
-        for k in obj_dict.keys():
-            obj_list.append(str(obj_dict[k]))
-
+        else:
+            for k, v in obj_dict.items():
+                if args[0] in k:
+                    obj_list.append(str(v))
         print(obj_list)
 
     def do_update(self, arg):
-        """Updates an instance based on the class name and id by adding or updating attribute"""
+        """Updates an instance based on the class name
+        and id by adding or updating attribute"""
         args = shlex.split(arg)
         e = IndexError
 
@@ -152,6 +158,13 @@ class HBNBCommand(cmd.Cmd):
             obj.__dict__[args[2]] = args[3]
 
         storage.save()
+
+    def do_clear(self, args: str) -> None:
+        """Clear the screen"""
+        if os.name == 'nt':
+            os.system('cls')
+        else:
+            os.system('clear')
 
     def do_quit(self, line):
         """Quit command to exit the program\n"""
