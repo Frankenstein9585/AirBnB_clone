@@ -1,6 +1,6 @@
 import cmd
 from models.base_model import BaseModel
-from __init__ import obj_dict, id_list
+from __init__ import storage, obj_dict
 
 """This contains the entry point of the command interpreter"""
 
@@ -44,20 +44,17 @@ class HBNBCommand(cmd.Cmd):
             return
 
         try:
-            if args[1] not in id_list:
+            if f'BaseModel.{args[1]}' not in obj_dict.keys():
                 print('** no instance found **')
                 return
         except e:
             print('** instance id missing **')
             return
 
-        for v in obj_dict.values():
-            if v.to_dict()['id'] == args[1]:
-                print(v)
+        print(obj_dict[f'BaseModel.{args[1]}'])
 
-    def do_delete(self, arg):
-        """Prints the string representation of an instance
-        based on the class name and id"""
+    def do_destroy(self, arg):
+        """Deletes an instance based on the class name and id"""
         args = arg.split()
         e = IndexError
         try:
@@ -69,16 +66,67 @@ class HBNBCommand(cmd.Cmd):
             return
 
         try:
-            if args[1] not in id_list:
+            if args[1] not in obj_dict.keys():
                 print('** no instance found **')
                 return
         except e:
             print('** instance id missing **')
             return
 
-        for v in obj_dict.values():
-            if v.to_dict()['id'] == args[1]:
-                obj_dict.pop()
+        obj_dict.pop(f'BaseModel.{args[1]}')
+        storage.save()
+
+    def do_all(self, arg):
+        """Prints the string representation of an instance
+               based on the class name and id"""
+        args = arg.split()
+        e = IndexError
+        obj_list = list()
+        try:
+            if args[0] != 'BaseModel':
+                print("** class name doesn't exist **")
+                return
+        except e:
+            print('** class name missing **')
+            return
+
+        for k in obj_dict.keys():
+            obj_list.append(str(obj_dict[k]))
+
+        print(obj_list)
+
+    def do_update(self, arg):
+        """Updates an instance based on the class name and id by adding or updating attribute"""
+        args = arg.split()
+        e = IndexError
+
+        try:
+            if args[0] != 'BaseModel':
+                print("** class name doesn't exist **")
+                return
+        except e:
+            print('** class name missing **')
+            return
+
+        try:
+            if args[1] not in obj_dict.keys():
+                print('** no instance found **')
+                return
+        except e:
+            print('** instance id missing **')
+            return
+        try:
+            ...
+        except e:
+            print('** attribute name missing **')
+            return
+
+        try:
+            ...
+        except e:
+            print('** value missing **')
+
+
 
     def do_quit(self, line):
         """Quit command to exit the program\n"""

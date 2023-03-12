@@ -3,6 +3,11 @@ from models.engine.file_storage import FileStorage
 storage = FileStorage()
 storage.reload()
 obj_dict = storage.all()
-id_list = list()
-for v in obj_dict.values():
-    id_list.append(v.to_dict()['id'])
+obj_list = list()
+
+for k in obj_dict.keys():
+    obj_list.append(str(obj_dict[k]))
+
+print(obj_list)
+
+
