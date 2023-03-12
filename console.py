@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+'''env not needed for this task'''
 import cmd
 import os
 import shlex
@@ -72,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
         print(obj_dict[f'{args[0]}.{args[1]}'])
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id\n"""
+        """Deletes an instance based on checks around  the class name and id\n"""
 
         args = arg.split()
         e = IndexError
