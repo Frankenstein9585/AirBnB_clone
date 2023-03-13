@@ -3,6 +3,8 @@
 import cmd
 import os
 import shlex
+import re
+
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -14,6 +16,16 @@ from __init__ import storage, obj_dict
 
 """This contains the entry point of the command interpreter"""
 
+
+def tokenize(arg: str) -> list:
+    """ Splits a string into tokens delimited by space
+    Args:
+        arg (string): strings to be split
+    Returns:
+        list: list of strings
+    """
+    token = re.split(r"[ .(),]", arg)
+    return token
 
 class HBNBCommand(cmd.Cmd):
     """Command Interpreter"""
@@ -44,7 +56,29 @@ class HBNBCommand(cmd.Cmd):
             "count": self.do_count,
             "update": self.do_update}
 
-        args = arg.split()
+        tokens = tokenize(arg)
+        for key in func_dict.keys():
+            # checking for commands to call
+            if key == tokens[1]:
+                # for if args is parentheses eg("something")
+                if tokens[2] != "" and len(tokens) < 6:
+                    # print(tokens)
+                    striped_arg = tokens[2].replace('"', '')
+                    args = f"{tokens[0]} {striped_arg}"
+                    return func_dict[tokens[1]](args)
+                elif len(tokens) > 6:
+                    # for update version 1
+                    # print(tokens)
+                    arg1 = tokens[2].replace('"', '')
+                    arg2 = tokens[4].replace('"', '')
+                    arg3 = tokens[6].replace('"', '')
+                    args = f"{tokens[0]} {arg1} {arg2} {arg3}"
+                    # print(args)
+                    return func_dict[tokens[1]](args)
+
+                else:
+                    # print(tokens)
+                    return func_dict[tokens[1]](tokens[0])
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel,
