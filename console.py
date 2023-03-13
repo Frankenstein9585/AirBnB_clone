@@ -27,6 +27,7 @@ def tokenize(arg: str) -> list:
     token = re.split(r"[ .(),]", arg)
     return token
 
+
 class HBNBCommand(cmd.Cmd):
     """Command Interpreter"""
     prompt = '(hbnb) '
