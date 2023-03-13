@@ -167,6 +167,18 @@ class HBNBCommand(cmd.Cmd):
         else:
             os.system('clear')
 
+    def do_count(self, arg):
+        """counts"""
+
+        args = arg.split()
+        # set counter
+        count = 0
+        # get all object keys
+        for k in obj_dict.keys():
+            if args[0] in k:
+                count += 1
+        print(count)
+
     def do_quit(self, line):
         """Quit command to exit the program\n"""
         return True
