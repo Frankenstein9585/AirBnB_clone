@@ -34,9 +34,22 @@ class HBNBCommand(cmd.Cmd):
         """Prints new line when an empty line is passed to the interpreter\n"""
         ...
 
+    def default(self, arg):
+        """Default method"""
+
+        func_dict = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "count": self.do_count,
+            "update": self.do_update}
+
+        args = arg.split()
+
     def do_create(self, arg):
         """Creates a new instance of BaseModel,
         saves it (to the JSON file) and prints the id\n"""
+
         if not arg:
             print('** class name missing **')
             return
@@ -73,7 +86,8 @@ class HBNBCommand(cmd.Cmd):
         print(obj_dict[f'{args[0]}.{args[1]}'])
 
     def do_destroy(self, arg):
-        """Deletes an instance based on checks around  the class name and id\n"""
+        """Deletes an instance based on checks around  the class name
+        and id\n"""
 
         args = arg.split()
         e = IndexError
