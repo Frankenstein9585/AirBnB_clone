@@ -25,15 +25,13 @@ class BaseModel:
                 setattr(self, k, v)
 
     def save(self):
-        """updates the public instance attribute 'updated_at' with the current datetime"""
+        """updates the public instance attribute
+        'updated_at' with the current datetime"""
         self.updated_at = datetime.now()
         models.storage.save()
 
-
     def to_dict(self):
-        """returns a dictionary containing all keys/values of __dict__ of the instance
-        with 'created_at' and 'updated at' in ISO format
-        """
+        """returns a dictionary containing a modified version of __dict__"""
         obj_dict = dict.copy(self.__dict__)
         obj_dict['__class__'] = self.__class__.__name__
         obj_dict['created_at'] = self.created_at.isoformat()
@@ -41,5 +39,7 @@ class BaseModel:
         return obj_dict
 
     def __str__(self):
-        """returns a string representation of a BaseModel object in dictionary form"""
-        return '[{}] ({}) {}'.format(self.__class__.__name__, self.id, self.__dict__)
+        """returns a string representation of a
+        BaseModel object in dictionary form"""
+        return '[{}] ({}) {}'.format(self.__class__.__name__,
+                                     self.id, self.__dict__)
